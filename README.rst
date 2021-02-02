@@ -1,10 +1,6 @@
 Felix Felicis
 ==============
 
-.. image:: https://travis-ci.org/lepture/liquidluck.png?branch=master
-    :target: https://travis-ci.org/lepture/liquidluck
-
-
 Felix Felicis (aka ``liquidluck``) is a simple lightweight static blog generator
 written in Python.
 
@@ -122,8 +118,11 @@ Compatibility
 
   - 2.6
   - 2.7
-  - 3.1
-  - 3.2
+  - 3.3
+  - 3.4
+  - 3.5
+  - 3.7
+  - 3.9
 
 
 .. _restructedText: http://docutils.sourceforge.net/rst.html

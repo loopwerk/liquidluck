@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 import sys
+from setuptools import setup
+import liquidluck
+from email.utils import parseaddr
+
+
 kwargs = {}
 major, minor = sys.version_info[:2]
 if major >= 3:
     kwargs['use_2to3'] = True
 
-from setuptools import setup
 install_requires = [
     'Jinja2', 'Pygments', 'misaka==1.0.2', 'docopt', 'PyYAML', 'docutils'
 ]
 
-
-import liquidluck
-from email.utils import parseaddr
 author, author_email = parseaddr(liquidluck.__author__)
 
 setup(
@@ -43,8 +43,11 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.1',
-        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: Implementation :: CPython',
         'Topic :: Text Processing :: Markup',
     ],
