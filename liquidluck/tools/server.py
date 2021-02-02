@@ -82,7 +82,11 @@ def _read(abspath):
     if not os.path.exists(filepath):
         return None
 
-    f = open(filepath)
+    mime_type, encoding = mimetypes.guess_type(abspath)
+    if not mime_type:
+        mime_type = 'text/html'
+
+    f = open(filepath, "r" if mime_type == "text/html" else "rb")
     content = f.read()
     f.close()
     return content
@@ -144,11 +148,9 @@ class LiveReloadHandler(WebSocketHandler):
 
     def on_message(self, message):
         """Handshake with livereload.js
-
         1. client send 'hello'
         2. server reply 'hello'
         3. client send 'info'
-
         http://help.livereload.com/kb/ecosystem/livereload-protocol
         """
         message = UnicodeDict(escape.json_decode(message))
@@ -262,6 +264,11 @@ class IndexHandler(RequestHandler):
             self.set_status(404)
             self.write(body or 'Not Found')
             return
+
+        if mime_type != "text/html":
+            self.finish(body)
+            return
+
         ua = self.request.headers.get("User-Agent", 'bot').lower()
         if 'msie' not in ua:
             body = body.replace(
@@ -291,12 +298,13 @@ class ThemeStaticHandler(RequestHandler):
 
 
 def start_server(debug=False):
+    message = 'Starting server at http://%s:%s' % (HOST, PORT)
     if debug:
         variables = settings.theme.get('vars', {})
         variables.update({'debug': True})
         settings.theme['vars'] = variables
     if RequestHandler is object:
-        logging.info('Start server at %s:%s' % (HOST, PORT))
+        logging.info(message)
         make_server(HOST, int(PORT), wsgi_app).serve_forever()
     else:
         import tornado.web
@@ -313,7 +321,7 @@ def start_server(debug=False):
         ]
         app = tornado.web.Application(handlers=handlers, default_host=HOST)
         app.listen(int(PORT))
-        logging.info('Start server at %s:%s' % (HOST, PORT))
+        logging.info(message)
         tornado.ioloop.IOLoop.instance().start()
 
 
