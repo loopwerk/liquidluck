@@ -9,7 +9,7 @@ if major >= 3:
 
 from setuptools import setup
 install_requires = [
-    'Jinja2', 'Pygments', 'misaka', 'docopt', 'PyYAML', 'docutils'
+    'Jinja2', 'Pygments', 'misaka==1.0.2', 'docopt', 'PyYAML', 'docutils'
 ]
 
 
